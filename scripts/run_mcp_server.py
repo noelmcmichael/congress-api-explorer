@@ -24,8 +24,8 @@ async def main():
         server = CongressMCPServer()
         
         # Run with stdio transport
-        async with server.serve(stdio_server()) as result:
-            await result
+        async with stdio_server() as (read_stream, write_stream):
+            await server.serve(read_stream, write_stream)
             
     except KeyboardInterrupt:
         logger.info("Server interrupted by user")

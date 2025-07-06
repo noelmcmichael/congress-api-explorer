@@ -4,10 +4,11 @@ Main MCP server implementation for Congress API Explorer.
 
 import asyncio
 from typing import Any, List, Optional, Dict
-from contextlib import asynccontextmanager
+# Removed asynccontextmanager import - not needed
 
 from mcp.server import Server
 from mcp.server.models import InitializationOptions
+from mcp.types import ServerCapabilities
 from mcp.types import (
     CallToolResult, 
     ListResourcesResult, 
@@ -526,8 +527,7 @@ class CongressMCPServer:
         rate_status = self.client.get_rate_limit_status() if self.client else {}
         return f"Congress API Explorer Status:\\n\\nRate Limits: {rate_status}"
     
-    @asynccontextmanager
-    async def serve(self, transport):
+    async def serve(self, read_stream, write_stream):
         """Serve the MCP server."""
         logger.info("Starting Congress API MCP Server...")
         
@@ -537,15 +537,16 @@ class CongressMCPServer:
             self.search_engine = CongressSearchEngine(self.client)
             
             # Start server
-            async with self.server.run(
-                transport, 
-                InitializationOptions(
-                    server_name="congress-api-explorer",
-                    server_version="0.1.0"
+            initialization_options = InitializationOptions(
+                server_name="congress-api-explorer",
+                server_version="0.1.0",
+                capabilities=ServerCapabilities(
+                    tools={},
+                    resources={}
                 )
-            ):
-                logger.info("Congress API MCP Server started successfully")
-                yield
+            )
+            logger.info("Congress API MCP Server started successfully")
+            await self.server.run(read_stream, write_stream, initialization_options)
                 
         finally:
             # Cleanup
