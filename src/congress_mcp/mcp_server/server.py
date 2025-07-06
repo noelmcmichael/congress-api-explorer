@@ -19,7 +19,7 @@ from mcp.types import (
 )
 
 from ..api import CongressAPIClient, CongressAPIError, CongressSearchEngine
-from ..utils import logger, settings
+from ..utils import logger, settings, health_checker
 from .tools import register_tools
 from .resources import register_resources
 
@@ -145,6 +145,12 @@ class CongressMCPServer:
             return await self._search_all(**arguments)
         elif name == "search_by_topic":
             return await self._search_by_topic(**arguments)
+        
+        # Health and monitoring tools
+        elif name == "get_health_status":
+            return await self._get_health_status(**arguments)
+        elif name == "get_system_metrics":
+            return await self._get_system_metrics(**arguments)
         
         else:
             raise ValueError(f"Unknown tool: {name}")
@@ -443,6 +449,59 @@ class CongressMCPServer:
             result += f"  Relevance: {item.relevance_score:.1f}\\n\\n"
         
         return result
+    
+    # Health and monitoring tool implementations
+    
+    async def _get_health_status(self, force_refresh: bool = False) -> str:
+        """Get comprehensive system health status."""
+        health = await health_checker.check_health(force_refresh=force_refresh)
+        
+        result = f"System Health Status: {health.status.value.upper()}\\n"
+        result += f"Uptime: {health_checker.get_uptime_formatted()}\\n"
+        result += f"Timestamp: {health.timestamp.isoformat()}\\n\\n"
+        
+        result += "Individual Health Checks:\\n\\n"
+        
+        for check in health.checks:
+            result += f"• {check.name}: {check.status.value.upper()}\\n"
+            result += f"  {check.message}\\n"
+            if check.response_time_ms is not None:
+                result += f"  Response Time: {check.response_time_ms:.1f}ms\\n"
+            result += "\\n"
+        
+        return result
+    
+    async def _get_system_metrics(self) -> str:
+        """Get system performance metrics and uptime."""
+        try:
+            import psutil
+            import json
+            
+            # Get system metrics
+            memory = psutil.virtual_memory()
+            cpu_percent = psutil.cpu_percent(interval=1)
+            disk_usage = psutil.disk_usage('/')
+            
+            # Get rate limit status
+            rate_status = self.client.get_rate_limit_status() if self.client else {}
+            
+            # Format metrics
+            result = "System Performance Metrics:\\n\\n"
+            
+            result += f"Uptime: {health_checker.get_uptime_formatted()}\\n"
+            result += f"Memory Usage: {memory.percent:.1f}% ({memory.used / 1024**3:.1f}GB / {memory.total / 1024**3:.1f}GB)\\n"
+            result += f"CPU Usage: {cpu_percent:.1f}%\\n"
+            result += f"Disk Usage: {disk_usage.percent:.1f}% ({disk_usage.used / 1024**3:.1f}GB / {disk_usage.total / 1024**3:.1f}GB)\\n\\n"
+            
+            if rate_status:
+                result += "API Rate Limit Status:\\n"
+                for window, info in rate_status.items():
+                    result += f"  {window.title()}: {info['used']}/{info['limit']} ({info['remaining']} remaining)\\n"
+            
+            return result
+            
+        except Exception as e:
+            return f"Error getting system metrics: {str(e)}"
     
     # Resource implementations
     

@@ -358,6 +358,33 @@ async def register_tools() -> List[Tool]:
                 "required": ["topic"],
                 "additionalProperties": False
             }
+        ),
+        
+        # Health and monitoring tools
+        Tool(
+            name="get_health_status",
+            description="Get comprehensive system health status",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "force_refresh": {
+                        "type": "boolean",
+                        "description": "Force refresh of cached health status",
+                        "default": False
+                    }
+                },
+                "additionalProperties": False
+            }
+        ),
+        
+        Tool(
+            name="get_system_metrics",
+            description="Get system performance metrics and uptime",
+            inputSchema={
+                "type": "object",
+                "properties": {},
+                "additionalProperties": False
+            }
         )
     ]
     
