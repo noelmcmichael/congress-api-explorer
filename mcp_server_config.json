@@ -1,0 +1,14 @@
+{
+  "name": "congress-api-explorer",
+  "description": "US Congress API Explorer with 16 tools for congressional data access",
+  "version": "0.1.0",
+  "runtime": "python",
+  "args": [
+    "/Users/noelmcmichael/Workspace/congress_api_explorer/scripts/run_mcp_server.py"
+  ],
+  "env": {
+    "CONGRESS_API_KEY": "kF6SxbPbbXXjOGDd2FIFaYUkZRuYfQN2OsQtnj9G"
+  },
+  "tools_count": 16,
+  "resources_count": 15
+}
