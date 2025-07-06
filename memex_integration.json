@@ -1,0 +1,38 @@
+{
+  "name": "congress-api-explorer",
+  "description": "US Congress API Explorer with 16 tools for congressional data access",
+  "runtime": "python",
+  "args": [
+    "/Users/noelmcmichael/Workspace/congress_api_explorer/scripts/run_mcp_server.py"
+  ],
+  "env": {
+    "CONGRESS_API_KEY": "kF6SxbPbbXXjOGDd2FIFaYUkZRuYfQN2OsQtnj9G",
+    "CACHE_TYPE": "memory",
+    "LOG_LEVEL": "INFO"
+  },
+  "tools": [
+    "get_committees",
+    "get_committee_details", 
+    "get_committee_hearings",
+    "get_hearings",
+    "search_hearings",
+    "get_bills",
+    "get_bill_details",
+    "search_bills",
+    "get_members",
+    "get_member_details",
+    "get_congress_info",
+    "get_rate_limit_status",
+    "search_all",
+    "search_by_topic",
+    "get_health_status",
+    "get_system_metrics"
+  ],
+  "resources": [
+    "congress://committees/current",
+    "congress://hearings/recent",
+    "congress://bills/recent",
+    "congress://members/current",
+    "congress://status/api"
+  ]
+}
