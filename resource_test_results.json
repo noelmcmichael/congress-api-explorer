@@ -1,0 +1,17 @@
+{
+  "resource_tests": {
+    "passed": 15,
+    "failed": 0,
+    "total": 15
+  },
+  "health_tests": {
+    "health_status": true,
+    "system_metrics": true,
+    "rate_limits": true
+  },
+  "overall": {
+    "success_rate": 100.0,
+    "total_tests": 18,
+    "total_passed": 18
+  }
+}
