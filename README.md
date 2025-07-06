@@ -66,13 +66,17 @@ congress_api_explorer/
 - [x] Support for nested API response structures
 - [x] Tested with real API data - all models parsing successfully
 
-### 🔄 Step 4: MCP Server (In Progress)
-- [ ] Basic MCP server implementation
-- [ ] Essential tools and resources
-- [ ] Protocol compliance
-- [ ] Error handling
+### ✅ Step 4: MCP Server (Complete)
+- [x] Basic MCP server implementation with async support
+- [x] Essential tools and resources (12 tools, 20 resources)
+- [x] Protocol compliance with MCP specification
+- [x] Error handling and proper response formatting
+- [x] Comprehensive tool suite for committees, hearings, bills, members
+- [x] Resource-based access to congressional data
+- [x] Rate limit monitoring and status reporting
+- [x] Tested successfully - all tools and resources working
 
-### 📋 Step 5: Committee Hearings Features (Planned)
+### 🔄 Step 5: Committee Hearings Features (In Progress)
 - [ ] Committee-specific tools
 - [ ] Hearing tracking capabilities
 - [ ] Witness and document access
@@ -112,10 +116,43 @@ congress_api_explorer/
    export CONGRESS_API_KEY="your-api-key-here"
    ```
 
-3. **Run Examples**:
+3. **Run MCP Server**:
    ```bash
-   uv run examples/basic_usage.py
+   python scripts/run_mcp_server.py
    ```
+
+4. **Test API Client**:
+   ```bash
+   python scripts/test_api_client.py
+   ```
+
+## MCP Tools Available
+
+### Committee Tools
+- `get_committees` - List congressional committees with filtering
+- `get_committee_details` - Detailed committee information
+- `get_committee_hearings` - Committee hearings and meetings
+
+### Hearing Tools  
+- `get_hearings` - Congressional hearings across committees
+- `search_hearings` - Search hearings by title/content
+
+### Bill Tools
+- `get_bills` - Bills and resolutions with filtering
+- `get_bill_details` - Detailed bill information with actions
+- `search_bills` - Search bills by title/content
+
+### Member Tools
+- `get_members` - Congressional members with filtering
+- `get_member_details` - Detailed member information
+
+### Utility Tools
+- `get_congress_info` - Current Congress information
+- `get_rate_limit_status` - API usage and rate limits
+
+## MCP Resources Available
+
+20+ resources including current committees, recent hearings, bills by chamber, member listings, and real-time status information.
 
 ## Development Guidelines
 
