@@ -1,0 +1,89 @@
+{
+  "summary": {
+    "passed": 16,
+    "failed": 0,
+    "success_rate": 100.0
+  },
+  "details": {
+    "get_committees": {
+      "status": "PASSED",
+      "result_length": 382,
+      "sample": "Found 5 committees:\\n\\n\u2022 Indian Affairs Committee (Senate)\\n  System Code: n79043125\\n\\n\u2022 Joint Econ"
+    },
+    "get_committee_details": {
+      "status": "PASSED",
+      "result_length": 61,
+      "sample": "Committee details for hsag00 (endpoint implementation needed)"
+    },
+    "get_committee_hearings": {
+      "status": "PASSED",
+      "result_length": 166,
+      "sample": "Found 3 hearings:\\n\\n\u2022 Unknown\\n  Date: Unknown\\n  Chamber: House\\n\\n\u2022 Unknown\\n  Date: Unknown\\n  C"
+    },
+    "get_hearings": {
+      "status": "PASSED",
+      "result_length": 281,
+      "sample": "Found 5 hearings:\\n\\n\u2022 Unknown\\n  Date: Unknown\\n  Committee: Unknown\\n\\n\u2022 Unknown\\n  Date: Unknown\\"
+    },
+    "search_hearings": {
+      "status": "PASSED",
+      "result_length": 58,
+      "sample": "Search results for 'budget' (search implementation needed)"
+    },
+    "get_bills": {
+      "status": "PASSED",
+      "result_length": 539,
+      "sample": "Found 5 bills:\\n\\n\u2022 HR 618: Apex Area Technical Corrections Act\\n  Latest Action: Presented to Presi"
+    },
+    "get_bill_details": {
+      "status": "PASSED",
+      "result_length": 142,
+      "sample": "Bill Details: hr 1\\n\\nTitle: One Big Beautiful Bill Act\\nSponsor: Rep. Arrington, Jodey C. [R-TX-19]"
+    },
+    "search_bills": {
+      "status": "PASSED",
+      "result_length": 66,
+      "sample": "Search results for 'infrastructure' (search implementation needed)"
+    },
+    "get_members": {
+      "status": "PASSED",
+      "result_length": 345,
+      "sample": "Found 5 members:\\n\\n\u2022 McCarthy, Carolyn (Unknown)\\n  State: New York, District: 4\\n\\n\u2022 Williams, Pat"
+    },
+    "get_member_details": {
+      "status": "PASSED",
+      "result_length": 59,
+      "sample": "Member details for P000197 (endpoint implementation needed)"
+    },
+    "get_congress_info": {
+      "status": "PASSED",
+      "result_length": 73,
+      "sample": "Current Congress Information:\\n\\nCongress Number: 119\\nYears: 2025-2026\\n"
+    },
+    "get_rate_limit_status": {
+      "status": "PASSED",
+      "result_length": 168,
+      "sample": "Rate Limit Status:\\n\\nHour Window:\\n  Used: 6/4500\\n  Remaining: 4494\\n  Reset in: 0 seconds\\n\\nMinu"
+    },
+    "search_all": {
+      "status": "PASSED",
+      "result_length": 33,
+      "sample": "No results found for 'healthcare'"
+    },
+    "search_by_topic": {
+      "status": "PASSED",
+      "result_length": 39,
+      "sample": "No results found for topic 'healthcare'"
+    },
+    "get_health_status": {
+      "status": "PASSED",
+      "result_length": 511,
+      "sample": "System Health Status: DEGRADED\\nUptime: 3s\\nTimestamp: 2025-07-06T15:11:02.392839\\n\\nIndividual Heal"
+    },
+    "get_system_metrics": {
+      "status": "PASSED",
+      "result_length": 229,
+      "sample": "System Performance Metrics:\\n\\nUptime: 4s\\nMemory Usage: 73.0% (13.7GB / 36.0GB)\\nCPU Usage: 12.7%\\n"
+    }
+  }
+}
