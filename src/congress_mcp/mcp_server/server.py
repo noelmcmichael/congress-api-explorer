@@ -18,7 +18,7 @@ from mcp.types import (
     Resource
 )
 
-from ..api import CongressAPIClient, CongressAPIError
+from ..api import CongressAPIClient, CongressAPIError, CongressSearchEngine
 from ..utils import logger, settings
 from .tools import register_tools
 from .resources import register_resources
@@ -30,6 +30,7 @@ class CongressMCPServer:
     def __init__(self):
         self.server = Server("congress-api-explorer")
         self.client: Optional[CongressAPIClient] = None
+        self.search_engine: Optional[CongressSearchEngine] = None
         self._setup_handlers()
     
     def _setup_handlers(self):
@@ -51,6 +52,7 @@ class CongressMCPServer:
                 # Ensure client is available
                 if not self.client:
                     self.client = CongressAPIClient()
+                    self.search_engine = CongressSearchEngine(self.client)
                 
                 # Route tool calls to appropriate handlers
                 result = await self._call_tool(name, arguments or {})
@@ -84,6 +86,7 @@ class CongressMCPServer:
                 # Ensure client is available
                 if not self.client:
                     self.client = CongressAPIClient()
+                    self.search_engine = CongressSearchEngine(self.client)
                 
                 # Route resource reads to appropriate handlers
                 content = await self._read_resource(uri)
@@ -136,6 +139,12 @@ class CongressMCPServer:
             return await self._get_congress_info(**arguments)
         elif name == "get_rate_limit_status":
             return await self._get_rate_limit_status(**arguments)
+        
+        # Enhanced search tools
+        elif name == "search_all":
+            return await self._search_all(**arguments)
+        elif name == "search_by_topic":
+            return await self._search_by_topic(**arguments)
         
         else:
             raise ValueError(f"Unknown tool: {name}")
@@ -379,6 +388,62 @@ class CongressMCPServer:
         
         return result
     
+    # Enhanced search tool implementations
+    
+    async def _search_all(
+        self,
+        query: str,
+        limit: int = 20,
+        include_types: Optional[List[str]] = None
+    ) -> str:
+        """Search across all Congress data types."""
+        results = await self.search_engine.search_all(
+            query=query,
+            limit=limit,
+            include_types=include_types
+        )
+        
+        if not results:
+            return f"No results found for '{query}'"
+        
+        result = f"Search Results for '{query}' ({len(results)} found):\\n\\n"
+        
+        for item in results:
+            result += f"• {item.title} ({item.item_type})\\n"
+            result += f"  {item.description}\\n"
+            if item.chamber:
+                result += f"  Chamber: {item.chamber}\\n"
+            result += f"  Relevance: {item.relevance_score:.1f}\\n\\n"
+        
+        return result
+    
+    async def _search_by_topic(
+        self,
+        topic: str,
+        item_types: Optional[List[str]] = None,
+        limit: int = 20
+    ) -> str:
+        """Search for congressional items by topic."""
+        results = await self.search_engine.search_by_topic(
+            topic=topic,
+            item_types=item_types,
+            limit=limit
+        )
+        
+        if not results:
+            return f"No results found for topic '{topic}'"
+        
+        result = f"Topic Search Results for '{topic}' ({len(results)} found):\\n\\n"
+        
+        for item in results:
+            result += f"• {item.title} ({item.item_type})\\n"
+            result += f"  {item.description}\\n"
+            if item.chamber:
+                result += f"  Chamber: {item.chamber}\\n"
+            result += f"  Relevance: {item.relevance_score:.1f}\\n\\n"
+        
+        return result
+    
     # Resource implementations
     
     async def _read_committees_resource(self, parts: List[str]) -> str:
@@ -410,6 +475,7 @@ class CongressMCPServer:
         try:
             # Initialize client
             self.client = CongressAPIClient()
+            self.search_engine = CongressSearchEngine(self.client)
             
             # Start server
             async with self.server.run(

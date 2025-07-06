@@ -291,6 +291,73 @@ async def register_tools() -> List[Tool]:
                 "properties": {},
                 "additionalProperties": False
             }
+        ),
+        
+        # Enhanced search tools
+        Tool(
+            name="search_all",
+            description="Search across all Congress data types (bills, hearings, committees, members)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "Search query",
+                        "minLength": 1
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "Number of results to return",
+                        "minimum": 1,
+                        "maximum": 50,
+                        "default": 20
+                    },
+                    "include_types": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": ["bill", "hearing", "committee", "member"]
+                        },
+                        "description": "Types to include in search",
+                        "default": ["bill", "hearing", "committee", "member"]
+                    }
+                },
+                "required": ["query"],
+                "additionalProperties": False
+            }
+        ),
+        
+        Tool(
+            name="search_by_topic",
+            description="Search for congressional items by topic (healthcare, economy, defense, etc.)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "topic": {
+                        "type": "string",
+                        "description": "Topic to search for",
+                        "enum": ["healthcare", "economy", "defense", "education", "environment", "immigration", "technology", "transportation"]
+                    },
+                    "item_types": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": ["bill", "hearing", "committee", "member"]
+                        },
+                        "description": "Types to include in search",
+                        "default": ["bill", "hearing"]
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "Number of results to return",
+                        "minimum": 1,
+                        "maximum": 50,
+                        "default": 20
+                    }
+                },
+                "required": ["topic"],
+                "additionalProperties": False
+            }
         )
     ]
     

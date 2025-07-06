@@ -76,17 +76,31 @@ congress_api_explorer/
 - [x] Rate limit monitoring and status reporting
 - [x] Tested successfully - all tools and resources working
 
-### 🔄 Step 5: Committee Hearings Features (In Progress)
-- [ ] Committee-specific tools
-- [ ] Hearing tracking capabilities
-- [ ] Witness and document access
-- [ ] Related bill connections
+### ✅ Step 5: Enhanced Committee Hearings Features (Next)
+- [x] Committee-specific tools (implemented)
+- [x] Hearing tracking capabilities (implemented)
+- [ ] Witness and document access (enhancement planned)
+- [ ] Related bill connections (enhancement planned)
 
-### 📋 Step 6: Integration Testing (Planned)
-- [ ] MCP client testing
-- [ ] API integration tests
-- [ ] Performance optimization
-- [ ] Rate limit validation
+### ✅ Step 6: Integration Testing (Complete)
+- [x] MCP client testing (working)
+- [x] API integration tests (working)
+- [x] Performance optimization (caching implemented)
+- [x] Rate limit validation (working)
+
+### ✅ Step 7: Advanced Features (In Progress)
+- [x] Enhanced search capabilities (implemented)
+- [ ] Real-time hearing status updates
+- [ ] Bill-to-hearing relationship mapping
+- [ ] Committee report integration
+- [ ] Voting record integration
+
+### 📋 Step 8: Production Readiness (Planned)
+- [ ] Health check endpoints
+- [ ] Comprehensive logging
+- [ ] Error monitoring
+- [ ] Performance metrics
+- [ ] Documentation improvements
 
 ## Configuration
 
@@ -126,7 +140,7 @@ congress_api_explorer/
    python scripts/test_api_client.py
    ```
 
-## MCP Tools Available
+## MCP Tools Available (14 Total)
 
 ### Committee Tools
 - `get_committees` - List congressional committees with filtering
@@ -149,6 +163,10 @@ congress_api_explorer/
 ### Utility Tools
 - `get_congress_info` - Current Congress information
 - `get_rate_limit_status` - API usage and rate limits
+
+### Enhanced Search Tools
+- `search_all` - Search across all Congress data types (bills, hearings, committees, members)
+- `search_by_topic` - Search by predefined topics (healthcare, economy, defense, etc.)
 
 ## MCP Resources Available
 
